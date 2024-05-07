@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 import json
 from bokeh.plotting import figure
 from bokeh.embed import json_item
@@ -17,10 +17,9 @@ def plot():
     p.line([1, 2, 3], [1, 4, 9], line_width=2)  # , legend_label="Temp."
 
     model = json.dumps(json_item(p, "myplot"))
-    # print(model, flush=True)
 
     # Return the plot as json
-    return model  # jsonify(json_item(p, "myplot"))
+    return model
 
 
 if __name__ == "__main__":
