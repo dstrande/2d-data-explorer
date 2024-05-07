@@ -1,6 +1,7 @@
 # Description
 
 This app is intended to recreate my Python GUI for exploring 2 datasets (https://github.com/dstrande/sci-streak).
+
 It is built with React in the frontend rather than PySide however.
 
 ## Available Scripts
