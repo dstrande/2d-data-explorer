@@ -12,7 +12,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently -n \"FRONTEND,BACKEND\" -c \"red,blue\" \"react-scripts start\" \"cd .. && python app.py\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -24,7 +24,7 @@
     ],
     "globals": {
       "Bokeh": "readonly"
-  }
+    }
   },
   "browserslist": {
     "production": [

@@ -18,9 +18,13 @@ def plot():
         -2 * ((x - 1.8) ** 2 + (y - 1.3) ** 2)
     )
 
-    p = figure(width=550, height=300, x_range=(0, 3), y_range=(0, 2))
+    p = figure(width=1000, height=800, x_range=(0, 3), y_range=(0, 2))
     levels = np.linspace(-1, 1, 9)
     p.contour(x, y, z, levels, fill_color=Inferno256, line_color="black")
+
+    p.xaxis.axis_label_text_font_size = "40pt"
+    p.yaxis.axis_label_text_font_size = "30pt"
+
     color_mapper = LinearColorMapper(palette="Inferno256", low=-1, high=1)
     color_bar = ColorBar(
         color_mapper=color_mapper,
