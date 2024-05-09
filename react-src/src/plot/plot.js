@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-// import OptionMenu from './dropdown/dropdown';
-// import Plottest from './plot/plot';
 
-function Plot() {
+function Plottest() {
   useEffect(() => {
     console.log("rendered");  
       async function fetchPlot() {
@@ -28,4 +26,4 @@ function Plot() {
   return <div id="myplot"></div>;
 }
 
-export default Plot;
+export default Plottest;
