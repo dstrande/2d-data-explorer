@@ -4,14 +4,17 @@ from bokeh.plotting import figure
 from bokeh.embed import json_item
 from bokeh.palettes import Inferno256
 from bokeh.models import FixedTicker, ColorBar, LinearColorMapper
-from flask_cors import cross_origin
+from flask_cors import cross_origin, CORS
 import numpy as np
 
+
 app = Flask(__name__)
+cors = CORS(app)
+# app.config["CORS_HEADERS"] = "Content-Type"
 
 
-@app.route("/plot")
-@cross_origin(origin="localhost")  # Allow only localhost:3000 to access
+@app.route("/")
+# @cross_origin()  # Allow only localhost:3000 to access
 def plot():
     x, y = np.meshgrid(np.linspace(0, 3, 40), np.linspace(0, 2, 30))
     z = 1.3 * np.exp(-2.5 * ((x - 1.3) ** 2 + (y - 0.8) ** 2)) - 1.2 * np.exp(
