@@ -1,6 +1,6 @@
+
 import React, { useEffect } from 'react';
-// import OptionMenu from './dropdown/dropdown';
-// import Plottest from './plot/plot';
+
 
 function Plot() {
   useEffect(() => {
@@ -25,7 +25,36 @@ function Plot() {
       fetchPlot();
   }, []);
 
-  return <div id="myplot"></div>;
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch('http://localhost:5000/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            console.log('File uploaded successfully');
+            // Handle the response as needed
+        } else {
+            console.error('Failed to upload file');
+        }
+    } catch (error) {
+        console.error('Error uploading file:', error);
+    }
+};
+
+return (
+    <div>
+        <div id="myplot"></div>
+        <input type="file" onChange={handleFileChange} />
+    </div>
+);
 }
 
 export default Plot;
