@@ -4,22 +4,17 @@ from bokeh.plotting import figure
 from bokeh.embed import json_item
 from bokeh.palettes import Inferno256
 from bokeh.models import FixedTicker, ColorBar, LinearColorMapper
-from flask_cors import cross_origin, CORS
+from flask_cors import CORS
 import numpy as np
 
 
 app = Flask(__name__)
-cors = CORS(app)
-# app.config["CORS_HEADERS"] = "Content-Type"
+CORS(app)
 
 
-@app.route("/")
-# @cross_origin()  # Allow only localhost:3000 to access
+@app.route("/plot")
 def plot():
-    x, y = np.meshgrid(np.linspace(0, 3, 40), np.linspace(0, 2, 30))
-    z = 1.3 * np.exp(-2.5 * ((x - 1.3) ** 2 + (y - 0.8) ** 2)) - 1.2 * np.exp(
-        -2 * ((x - 1.8) ** 2 + (y - 1.3) ** 2)
-    )
+    x, y, z = data()
 
     p = figure(width=1000, height=800, x_range=(0, 3), y_range=(0, 2))
     levels = np.linspace(-1, 1, 9)
@@ -39,6 +34,16 @@ def plot():
 
     # Return the plot as json
     return model
+
+
+@app.route("/upload")
+def data():
+    x, y = np.meshgrid(np.linspace(0, 3, 40), np.linspace(0, 2, 30))
+    z = 1.3 * np.exp(-2.5 * ((x - 1.3) ** 2 + (y - 0.8) ** 2)) - 1.2 * np.exp(
+        -2 * ((x - 1.8) ** 2 + (y - 1.3) ** 2)
+    )
+
+    return x, y, z
 
 
 if __name__ == "__main__":
