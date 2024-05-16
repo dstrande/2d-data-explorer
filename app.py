@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, flash, redirect
 import json
 from bokeh.plotting import figure
 from bokeh.embed import json_item
@@ -8,6 +8,11 @@ from flask_cors import CORS
 import numpy as np
 
 
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+ALLOWED_EXTENSIONS = {"txt", "h5"}
 app = Flask(__name__)
 CORS(app)
 
@@ -36,12 +41,22 @@ def plot():
     return model
 
 
-@app.route("/upload")
+@app.route("/upload", methods=["POST"])
 def data():
     x, y = np.meshgrid(np.linspace(0, 3, 40), np.linspace(0, 2, 30))
     z = 1.3 * np.exp(-2.5 * ((x - 1.3) ** 2 + (y - 0.8) ** 2)) - 1.2 * np.exp(
         -2 * ((x - 1.8) ** 2 + (y - 1.3) ** 2)
     )
+
+    if request.method == "POST":
+        # check if the post request has the file part
+        app.logger.info("POST Flask")
+        if "file" not in request.files:
+            flash("No file part")
+            return redirect(request.url)
+        file = request.files["file"]
+
+        # TODO use file for data
 
     return x, y, z
 
